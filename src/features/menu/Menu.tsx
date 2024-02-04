@@ -1,5 +1,24 @@
+import { useLoaderData } from "react-router-dom";
+import MenuItem from "./MenuItem.tsx";
+
+export interface Pizza {
+  id?: number;
+  name?: string;
+  unitPrice?: number;
+  imageUrl?: string;
+  ingredients?: string[];
+  soldOut?: boolean;
+}
+
 function Menu() {
-  return <h1>Menu</h1>;
+  const menu: Pizza[] = useLoaderData() as Pizza[];
+  return (
+    <ul>
+      {menu.map((pizza: Pizza) => (
+        <MenuItem pizza={pizza} key={pizza.id} />
+      ))}
+    </ul>
+  );
 }
 
 export default Menu;
