@@ -5,11 +5,13 @@ import Cart from "./features/cart/Cart.tsx";
 import CreateOrder from "./features/order/CreateOrder.tsx";
 import Order from "./features/order/Order.tsx";
 import AppLayout from "./ui-components/AppLayout.tsx";
-import { menuLoader } from "./loaders/loaders.ts";
+import { menuLoader, orderLoader } from "./loaders/loaders.ts";
+import Error from "./ui-components/Error.tsx";
 
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
+    errorElement: <Error />,
     children: [
       {
         path: "/",
@@ -19,6 +21,7 @@ const router = createBrowserRouter([
         path: "/menu",
         element: <Menu />,
         loader: menuLoader,
+        errorElement: <Error />,
       },
       {
         path: "/cart",
@@ -31,6 +34,8 @@ const router = createBrowserRouter([
       {
         path: "/order/:orderId",
         element: <Order />,
+        loader: orderLoader,
+        errorElement: <Error />,
       },
     ],
   },
