@@ -1,3 +1,24 @@
 {
-  "extends": "react-app"
+  "extends": "react-app",
+  "no-unused-vars": [
+    "warn"
+  ],
+  "react/jsx-key": [
+    "warn"
+  ],
+  "react/no-unescaped-entities": [
+    "warn"
+  ],
+  "react/prop-types": [
+    "warn"
+  ],
+  "no-undef": [
+    "warn"
+  ],
+  "eslint.rules.customizations": [
+    {
+      "rule": "*",
+      "severity": "warn"
+    }
+  ]
 }
