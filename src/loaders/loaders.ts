@@ -15,8 +15,7 @@ interface OrderLoaderParams {
 export async function orderLoader({
   params,
 }: LoaderFunctionArgs<OrderLoaderParams>) {
-  // Assuming params is of type any, ensure you validate or assert the correct structure
-  const orderId = params.orderId!; // This casting is safe based on your routing setup
+  const orderId = params.orderId!;
   const order = await getOrder(orderId);
   return order;
 }

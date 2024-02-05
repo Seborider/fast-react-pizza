@@ -1,12 +1,6 @@
-// https://uibakery.io/regex-library/phone-number
-
-import { Form, useNavigation } from "react-router-dom";
+import { Form, useActionData, useNavigation } from "react-router-dom";
 import { MenuItemType } from "../../services/apiRestaurant.ts";
-
-// const isValidPhone = (str: string) =>
-//   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
-//     str,
-//   );
+import { FormErrors } from "../../actions/actions.ts";
 
 const fakeCart = [
   {
@@ -36,7 +30,10 @@ function CreateOrder() {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
 
-  // const [withPriority, setWithPriority] = useState(false);
+  const actionData = useActionData() as FormErrors;
+  // Initialize formErrors with default values to prevent undefined access
+  const formErrors: FormErrors = actionData || { phone: "" };
+
   const cart: MenuItemType[] = fakeCart;
 
   return (
@@ -54,6 +51,7 @@ function CreateOrder() {
           <div>
             <input type="tel" name="phone" required />
           </div>
+          {formErrors.phone && <p>{formErrors.phone}</p>}
         </div>
 
         <div>
@@ -64,14 +62,8 @@ function CreateOrder() {
         </div>
 
         <div>
-          <input
-            type="checkbox"
-            name="priority"
-            id="priority"
-            // value={withPriority}
-            // onChange={(e) => setWithPriority(e.target.checked)}
-          />
-          <label htmlFor="priority">Want to yo give your order priority?</label>
+          <input type="checkbox" name="priority" id="priority" />
+          <label htmlFor="priority">Want to give your order priority?</label>
         </div>
 
         <div>

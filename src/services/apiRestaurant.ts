@@ -5,6 +5,7 @@ export interface MenuItemType {
   imageUrl?: string;
   ingredients?: string[];
   soldOut?: boolean;
+  phone?: string;
 }
 
 export interface ApiResponse<T> {
@@ -15,6 +16,7 @@ export interface ApiResponse<T> {
 export interface NewOrder {
   cart: MenuItemType[];
   priority: boolean;
+  phone?: string;
 }
 
 export interface OrderDetail {
