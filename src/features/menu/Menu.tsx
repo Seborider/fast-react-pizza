@@ -13,7 +13,7 @@ export interface Pizza {
 function Menu() {
   const menu: Pizza[] = useLoaderData() as Pizza[];
   return (
-    <ul>
+    <ul className="divide-y divide-stone-200">
       {menu.map((pizza: Pizza) => (
         <MenuItem pizza={pizza} key={pizza.id} />
       ))}

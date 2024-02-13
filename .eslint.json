@@ -15,6 +15,9 @@
   "no-undef": [
     "warn"
   ],
+  "no-unsafe-member-access": [
+    "warn"
+  ],
   "eslint.rules.customizations": [
     {
       "rule": "*",
