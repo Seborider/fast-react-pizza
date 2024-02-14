@@ -2,8 +2,8 @@ import { Form, useActionData, useNavigation } from "react-router-dom";
 import { MenuItemType } from "../../services/apiRestaurant.ts";
 import { FormErrors } from "../../actions/actions.ts";
 import Button from "../../ui-components/Button.tsx";
-import { RootState } from "../../store.ts";
 import { useSelector } from "react-redux";
+import { getUserName } from "../user/userSlice.ts";
 
 const fakeCart = [
   {
@@ -32,7 +32,7 @@ const fakeCart = [
 function CreateOrder() {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
-  const username = useSelector((state: RootState) => state.user.username);
+  const username = useSelector(getUserName);
 
   const actionData = useActionData() as FormErrors;
   // Initialize formErrors with default values to prevent undefined access

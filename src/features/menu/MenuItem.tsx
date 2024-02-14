@@ -1,13 +1,33 @@
 import { Pizza } from "./Menu.tsx";
 import { formatCurrency } from "../../utils/helpers.ts";
 import Button from "../../ui-components/Button.tsx";
+import { useDispatch } from "react-redux";
+import { addItem, CartItem } from "../cart/cartSlice.ts";
 
 interface MenuItemProps {
   pizza: Pizza;
 }
 
 function MenuItem({ pizza }: MenuItemProps) {
-  const { name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+  const dispatch = useDispatch();
+  const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+
+  function handleAddToCart() {
+    if (
+      typeof id === "number" &&
+      typeof unitPrice === "number" &&
+      typeof name === "string"
+    ) {
+      const newItem: CartItem = {
+        pizzaID: id,
+        name,
+        quantity: 1,
+        unitPrice,
+        totalPrice: unitPrice, // `unitPrice` is guaranteed to be defined here
+      };
+      dispatch(addItem(newItem));
+    }
+  }
 
   return (
     <li className=" flex gap-4 py-2">
@@ -29,7 +49,11 @@ function MenuItem({ pizza }: MenuItemProps) {
               Sold out
             </p>
           )}
-          <Button type="small">Add to Cart</Button>
+          {!soldOut && (
+            <Button type="small" onClick={handleAddToCart}>
+              Add to Cart
+            </Button>
+          )}
         </div>
       </div>
     </li>

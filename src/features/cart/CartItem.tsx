@@ -1,9 +1,9 @@
 import { formatCurrency } from "../../utils/helpers.ts";
 import Button from "../../ui-components/Button.tsx";
 
-interface CartItemProps {
+export interface CartItemProps {
   item: {
-    pizzaId: number;
+    pizzaID: number;
     name: string;
     quantity: number;
     totalPrice: number;

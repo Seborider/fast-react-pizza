@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
-import { RootState } from "../../store.ts";
+import { getUserName } from "./userSlice.ts";
 
 export default function UserName() {
-  const username = useSelector((state: RootState) => state.user.username);
+  const username = useSelector(getUserName);
 
   if (!username) return null;
 
