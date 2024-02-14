@@ -1,9 +1,10 @@
 import { Link, To } from "react-router-dom";
+import { ReactNode } from "react";
 
 type ButtonType = "primary" | "small" | "secondary";
 
 interface ButtonProps {
-  children: string;
+  children: ReactNode;
   disabled?: boolean;
   to?: To;
   type: ButtonType;

@@ -3,7 +3,7 @@ import Button from "../../ui-components/Button.tsx";
 
 interface CartItemProps {
   item: {
-    pizzaId: string;
+    pizzaId: number;
     name: string;
     quantity: number;
     totalPrice: number;
