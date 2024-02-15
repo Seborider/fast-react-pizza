@@ -12,7 +12,7 @@ function Cart() {
   const dispatch = useDispatch();
 
   if (!cart.length) return <EmptyCart />;
-  
+
   return (
     <div className="px-4 py-3">
       <ButtonLink to="/menu">&larr; Back to menu</ButtonLink>
@@ -20,7 +20,7 @@ function Cart() {
       <h2 className="mt-7 text-xl font-semibold">Your cart, {username}</h2>
       <ul className="mt-3 divide-y divide-stone-200 border-b">
         {cart.map((item) => (
-          <CartItem item={item} key={item.pizzaID}></CartItem>
+          <CartItem item={item} key={item.pizzaId}></CartItem>
         ))}
       </ul>
       <div className="mt-6 space-x-2">

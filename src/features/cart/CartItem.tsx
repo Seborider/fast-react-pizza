@@ -6,7 +6,7 @@ import { getCurrentQuantityByID } from "./cartSlice.ts";
 
 export interface CartItemProps {
   item: {
-    pizzaID: number;
+    pizzaId: number;
     name: string;
     quantity: number;
     totalPrice: number;
@@ -14,9 +14,9 @@ export interface CartItemProps {
 }
 
 function CartItem({ item }: CartItemProps) {
-  const { pizzaID, name, quantity, totalPrice } = item;
+  const { pizzaId, name, quantity, totalPrice } = item;
 
-  const currentQantity = useSelector(getCurrentQuantityByID(pizzaID));
+  const currentQantity = useSelector(getCurrentQuantityByID(pizzaId));
 
   return (
     <li className="sm: py-3 sm:flex sm:items-center sm:justify-between">
@@ -26,10 +26,10 @@ function CartItem({ item }: CartItemProps) {
       <div className="flex items-center justify-between sm:gap-6">
         <p className="text-sm font-bold"> {formatCurrency(totalPrice)}</p>
         <UpdateItemQuantityButtons
-          pizzaID={pizzaID}
+          pizzaId={pizzaId}
           currentQuantity={currentQantity}
         />
-        <DeleteItemButton pizzaID={pizzaID} />
+        <DeleteItemButton pizzaId={pizzaId} />
       </div>
     </li>
   );

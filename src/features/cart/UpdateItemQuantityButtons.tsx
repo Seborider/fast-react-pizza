@@ -3,12 +3,12 @@ import { useDispatch } from "react-redux";
 import { decreaseItemQuantity, increaseItemQuantity } from "./cartSlice.ts";
 
 interface UpdateItemQuantityButtonsProps {
-  pizzaID: number;
+  pizzaId: number;
   currentQuantity?: number;
 }
 
 export default function UpdateItemQuantityButtons({
-  pizzaID,
+  pizzaId,
   currentQuantity,
 }: UpdateItemQuantityButtonsProps) {
   const dispatch = useDispatch();
@@ -17,14 +17,14 @@ export default function UpdateItemQuantityButtons({
     <div className="ali flex items-center gap-2 md:gap-4">
       <Button
         type="round"
-        onClick={() => dispatch(decreaseItemQuantity(pizzaID))}
+        onClick={() => dispatch(decreaseItemQuantity(pizzaId))}
       >
         -
       </Button>
       <span className="text-sm font-medium">{currentQuantity}</span>
       <Button
         type="round"
-        onClick={() => dispatch(increaseItemQuantity(pizzaID))}
+        onClick={() => dispatch(increaseItemQuantity(pizzaId))}
       >
         +
       </Button>

@@ -1,44 +1,30 @@
 import { Form, useActionData, useNavigation } from "react-router-dom";
 import { MenuItemType } from "../../services/apiRestaurant.ts";
-import { FormErrors } from "../../actions/actions.ts";
 import Button from "../../ui-components/Button.tsx";
 import { useSelector } from "react-redux";
 import { getUserName } from "../user/userSlice.ts";
+import { getCart, getTotalCartPrice } from "../cart/cartSlice.ts";
 
-const fakeCart = [
-  {
-    pizzaId: 12,
-    name: "Mediterranean",
-    quantity: 2,
-    unitPrice: 16,
-    totalPrice: 32,
-  },
-  {
-    pizzaId: 6,
-    name: "Vegetale",
-    quantity: 1,
-    unitPrice: 13,
-    totalPrice: 13,
-  },
-  {
-    pizzaId: 11,
-    name: "Spinach and Mushroom",
-    quantity: 1,
-    unitPrice: 15,
-    totalPrice: 15,
-  },
-];
+import { FormErrors } from "../../actions/actions.ts";
+import EmptyCart from "../cart/EmptyCart.tsx";
+import { formatCurrency } from "../../utils/helpers.ts";
+import { useState } from "react";
 
 function CreateOrder() {
+  const [withPriority, setWithPriority] = useState<boolean>(false);
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
   const username = useSelector(getUserName);
+  const totalCartPrice = useSelector(getTotalCartPrice);
+  const priorityPrice = withPriority ? totalCartPrice * 0.2 : 0;
+  const totalPrice = totalCartPrice + priorityPrice;
 
   const actionData = useActionData() as FormErrors;
-  // Initialize formErrors with default values to prevent undefined access
   const formErrors: FormErrors = actionData || { phone: "" };
 
-  const cart: MenuItemType[] = fakeCart;
+  const cart: MenuItemType[] = useSelector(getCart);
+
+  if (!cart) return <EmptyCart />;
 
   return (
     <div className="px-4 py-6">
@@ -88,6 +74,8 @@ function CreateOrder() {
             name="priority"
             id="priority"
             className="h-6 w-6 accent-yellow-400 focus:ring-offset-2"
+            checked={withPriority}
+            onChange={(e) => setWithPriority(e.target.checked)}
           />
           <label className="font-medium" htmlFor="priority">
             Want to give your order priority?
@@ -97,7 +85,9 @@ function CreateOrder() {
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
           <Button type="primary" disabled={isSubmitting}>
-            {isSubmitting ? "Ordering" : "Order now"}
+            {isSubmitting
+              ? "Ordering"
+              : `Order now for ${formatCurrency(totalPrice)}`}
           </Button>
         </div>
       </Form>

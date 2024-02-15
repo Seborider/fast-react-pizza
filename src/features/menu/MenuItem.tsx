@@ -27,7 +27,7 @@ function MenuItem({ pizza }: MenuItemProps) {
       typeof name === "string"
     ) {
       const newItem: CartItem = {
-        pizzaID: id,
+        pizzaId: id,
         name,
         quantity: 1,
         unitPrice,
@@ -60,10 +60,10 @@ function MenuItem({ pizza }: MenuItemProps) {
           {isInCart && (
             <div className="flex items-center gap-3 sm:gap-6">
               <UpdateItemQuantityButtons
-                pizzaID={id!}
+                pizzaId={id!}
                 currentQuantity={currentQuantity}
               />
-              <DeleteItemButton pizzaID={id!} />
+              <DeleteItemButton pizzaId={id!} />
             </div>
           )}
           {!soldOut && !isInCart && (

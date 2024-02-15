@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store.ts";
 
 export interface CartItem {
-  pizzaID: number;
+  pizzaId: number;
   name: string;
   quantity: number;
   unitPrice: number;
@@ -21,10 +21,10 @@ const cartSlice = createSlice({
       state.cart.push(action.payload);
     },
     deleteItem(state, action: PayloadAction<number>) {
-      state.cart = state.cart.filter((item) => item.pizzaID !== action.payload);
+      state.cart = state.cart.filter((item) => item.pizzaId !== action.payload);
     },
     increaseItemQuantity(state, action: PayloadAction<number>) {
-      const item = state.cart.find((item) => item.pizzaID === action.payload);
+      const item = state.cart.find((item) => item.pizzaId === action.payload);
       if (item) {
         item.quantity++;
         item.totalPrice = item.quantity * item.unitPrice;
@@ -32,7 +32,7 @@ const cartSlice = createSlice({
     },
     decreaseItemQuantity(state, action: PayloadAction<number>) {
       const itemIndex = state.cart.findIndex(
-        (item) => item.pizzaID === action.payload,
+        (item) => item.pizzaId === action.payload,
       );
       if (itemIndex !== -1) {
         const item = state.cart[itemIndex];
@@ -61,7 +61,7 @@ export const {
 export const getCart = (state: RootState) => state.cart.cart;
 
 export const getCurrentQuantityByID = (id: number) => (state: RootState) =>
-  state.cart.cart.find((item) => item.pizzaID === id)?.quantity ?? 0;
+  state.cart.cart.find((item) => item.pizzaId === id)?.quantity ?? 0;
 export const getTotalCartQuantity = (state: RootState) =>
   state.cart.cart.reduce((sum, item) => sum + item.quantity, 0);
 

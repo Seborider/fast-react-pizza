@@ -3,14 +3,14 @@ import { useDispatch } from "react-redux";
 import { deleteItem } from "./cartSlice.ts";
 
 interface DeleteItemProps {
-  pizzaID: number;
+  pizzaId: number;
 }
 
-export default function DeleteItemButton({ pizzaID }: DeleteItemProps) {
+export default function DeleteItemButton({ pizzaId }: DeleteItemProps) {
   const dispatch = useDispatch();
 
   return (
-    <Button type={"small"} onClick={() => dispatch(deleteItem(pizzaID))}>
+    <Button type={"small"} onClick={() => dispatch(deleteItem(pizzaId))}>
       Delete
     </Button>
   );

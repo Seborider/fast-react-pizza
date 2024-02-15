@@ -9,7 +9,7 @@ import { useLoaderData } from "react-router-dom";
 import OrderItem, { OrderItemType } from "./OrderItem.tsx";
 
 interface Order {
-  id?: string;
+  id: string;
   status: string;
   priority: string;
   priorityPrice: number;
@@ -52,7 +52,7 @@ function Order() {
 
       <ul className=" dive-stone-200 divide-y border-b border-t">
         {cart.map((item: OrderItemType) => (
-          <OrderItem item={item} key={item.id}></OrderItem>
+          <OrderItem item={item} key={`item-${item.id}`}></OrderItem>
         ))}
       </ul>
 
