@@ -1,8 +1,14 @@
 import { Pizza } from "./Menu.tsx";
 import { formatCurrency } from "../../utils/helpers.ts";
 import Button from "../../ui-components/Button.tsx";
-import { useDispatch } from "react-redux";
-import { addItem, CartItem } from "../cart/cartSlice.ts";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addItem,
+  CartItem,
+  getCurrentQuantityByID,
+} from "../cart/cartSlice.ts";
+import DeleteItemButton from "../cart/DeleteItemButton.tsx";
+import UpdateItemQuantityButtons from "../cart/UpdateItemQuantityButtons.tsx";
 
 interface MenuItemProps {
   pizza: Pizza;
@@ -11,6 +17,8 @@ interface MenuItemProps {
 function MenuItem({ pizza }: MenuItemProps) {
   const dispatch = useDispatch();
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+  const currentQuantity = useSelector(getCurrentQuantityByID(id!));
+  const isInCart = currentQuantity > 0;
 
   function handleAddToCart() {
     if (
@@ -49,7 +57,16 @@ function MenuItem({ pizza }: MenuItemProps) {
               Sold out
             </p>
           )}
-          {!soldOut && (
+          {isInCart && (
+            <div className="flex items-center gap-3 sm:gap-6">
+              <UpdateItemQuantityButtons
+                pizzaID={id!}
+                currentQuantity={currentQuantity}
+              />
+              <DeleteItemButton pizzaID={id!} />
+            </div>
+          )}
+          {!soldOut && !isInCart && (
             <Button type="small" onClick={handleAddToCart}>
               Add to Cart
             </Button>

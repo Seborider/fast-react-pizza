@@ -1,5 +1,8 @@
 import { formatCurrency } from "../../utils/helpers.ts";
-import Button from "../../ui-components/Button.tsx";
+import DeleteItemButton from "./DeleteItemButton.tsx";
+import UpdateItemQuantityButtons from "./UpdateItemQuantityButtons.tsx";
+import { useSelector } from "react-redux";
+import { getCurrentQuantityByID } from "./cartSlice.ts";
 
 export interface CartItemProps {
   item: {
@@ -11,7 +14,9 @@ export interface CartItemProps {
 }
 
 function CartItem({ item }: CartItemProps) {
-  const { name, quantity, totalPrice } = item;
+  const { pizzaID, name, quantity, totalPrice } = item;
+
+  const currentQantity = useSelector(getCurrentQuantityByID(pizzaID));
 
   return (
     <li className="sm: py-3 sm:flex sm:items-center sm:justify-between">
@@ -20,7 +25,11 @@ function CartItem({ item }: CartItemProps) {
       </p>
       <div className="flex items-center justify-between sm:gap-6">
         <p className="text-sm font-bold"> {formatCurrency(totalPrice)}</p>
-        <Button type={"small"}>Delete</Button>
+        <UpdateItemQuantityButtons
+          pizzaID={pizzaID}
+          currentQuantity={currentQantity}
+        />
+        <DeleteItemButton pizzaID={pizzaID} />
       </div>
     </li>
   );
