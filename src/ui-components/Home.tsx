@@ -1,10 +1,10 @@
 import CreateUser from "../features/user/CreateUser.tsx";
 import { useSelector } from "react-redux";
 import Button from "./Button.tsx";
-import { getUserName } from "../features/user/userSlice.ts";
+import { getUser } from "../features/user/userSlice.ts";
 
 function Home() {
-  const username = useSelector(getUserName);
+  const { username } = useSelector(getUser);
 
   return (
     <div className="my-10 px-4 text-center sm:my-16">

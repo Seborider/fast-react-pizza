@@ -1,34 +1,59 @@
-/*function getPosition() {
-  return new Promise(function (resolve, reject) {
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../../store.ts";
+import {
+  AddressDetailsResponse,
+  getAddress,
+} from "../../services/apiGeocoding.ts";
+
+interface Position {
+  latitude: number;
+  longitude: number;
+}
+
+interface FetchAddressReturn {
+  position: Position;
+  address: string;
+}
+
+interface UserState {
+  username: string;
+  status: "idle" | "loading" | "failed" | "succeeded";
+  position: Position;
+  address: string;
+  error: string;
+}
+
+function getPosition(): Promise<GeolocationPosition> {
+  return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject);
   });
 }
 
-async function fetchAddress() {
-  // 1) We get the user's geolocation position
-  const positionObj = await getPosition();
-  const position = {
-    latitude: positionObj.coords.latitude,
-    longitude: positionObj.coords.longitude,
-  };
+export const fetchAdress = createAsyncThunk<FetchAddressReturn>(
+  "user/fetchAdress",
+  async (): Promise<FetchAddressReturn> => {
+    const positionObj = await getPosition();
+    const position: Position = {
+      latitude: positionObj.coords.latitude,
+      longitude: positionObj.coords.longitude,
+    };
 
-  // 2) Then we use a reverse geocoding API to get a description of the user's address, so we can display it the order form, so that the user can correct it if wrong
-  const addressObj = await getAddress(position);
-  const address = `${addressObj?.locality}, ${addressObj?.city} ${addressObj?.postcode}, ${addressObj?.countryName}`;
+    const addressObj: AddressDetailsResponse = await getAddress(position);
+    const address = `${addressObj.locality}, ${addressObj.city} ${addressObj.postcode}, ${addressObj.countryName}`;
 
-  // 3) Then we return an object with the data that we are interested in
-  return { position, address };
-}*/
-
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../store.ts";
-
-interface UserState {
-  username: string;
-}
+    return { position, address };
+  },
+);
 
 const initialState: UserState = {
   username: "",
+  status: "idle",
+  position: {
+    latitude: 0,
+    longitude: 0,
+  },
+  address: "",
+  error: "",
 };
 
 const userSlice = createSlice({
@@ -39,9 +64,25 @@ const userSlice = createSlice({
       state.username = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchAdress.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchAdress.fulfilled, (state, action) => {
+        state.position = action.payload.position;
+        state.address = action.payload.address;
+        state.status = "succeeded";
+      })
+      .addCase(fetchAdress.rejected, (state) => {
+        state.error =
+          "There was a problem getting your location. Make sure to fill this field";
+        state.status = "failed";
+      });
+  },
 });
 
-export const getUserName = (state: RootState) => state.user.username;
+export const getUser = (state: RootState) => state.user;
 export const { updateName } = userSlice.actions;
 
 export default userSlice.reducer;

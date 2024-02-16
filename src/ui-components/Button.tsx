@@ -1,5 +1,5 @@
 import { Link, To } from "react-router-dom";
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 
 type ButtonType = "primary" | "small" | "secondary" | "round";
 
@@ -8,7 +8,8 @@ interface ButtonProps {
   disabled?: boolean;
   to?: To;
   type: ButtonType;
-  onClick?: () => void;
+  // eslint-disable-next-line no-unused-vars
+  onClick?: (() => void) | ((e: React.MouseEvent<HTMLElement>) => void);
 }
 
 export default function Button({
