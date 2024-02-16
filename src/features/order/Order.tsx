@@ -7,8 +7,9 @@ import {
 } from "../../utils/helpers";
 import { useLoaderData } from "react-router-dom";
 import OrderItem, { OrderItemType } from "./OrderItem.tsx";
+import UpdateOrder from "./UpdateOrder.tsx";
 
-interface Order {
+export interface OrderType {
   id: string;
   status: string;
   priority: string;
@@ -19,7 +20,7 @@ interface Order {
 }
 
 function Order() {
-  const order: Order = useLoaderData() as Order;
+  const order: OrderType = useLoaderData() as OrderType;
 
   // Everyone can search for all orders, so for privacy reasons we're gonna exclude names or address, these are only for the restaurant staff
   const {
@@ -52,7 +53,7 @@ function Order() {
 
       <ul className=" dive-stone-200 divide-y border-b border-t">
         {cart.map((item: OrderItemType) => (
-          <OrderItem item={item} key={`item-${item.id}`}></OrderItem>
+          <OrderItem item={item} key={item.id}></OrderItem>
         ))}
       </ul>
 
@@ -80,6 +81,7 @@ function Order() {
           To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
         </p>
       </div>
+      {!priority && <UpdateOrder order={order} />}
     </div>
   );
 }

@@ -7,7 +7,7 @@ import Order from "./features/order/Order.tsx";
 import AppLayout from "./ui-components/AppLayout.tsx";
 import { menuLoader, orderLoader } from "./loaders/loaders.ts";
 import Error from "./ui-components/Error.tsx";
-import { createOrderAction } from "./actions/actions.ts";
+import { createOrderAction, updateOrderAction } from "./actions/actions.ts";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +38,7 @@ const router = createBrowserRouter([
         element: <Order />,
         loader: orderLoader,
         errorElement: <Error />,
+        action: updateOrderAction,
       },
     ],
   },

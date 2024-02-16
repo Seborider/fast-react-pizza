@@ -2,6 +2,7 @@ import {
   createOrder,
   MenuItemType,
   NewOrder,
+  updateOrder,
 } from "../services/apiRestaurant.ts";
 import { redirect } from "react-router-dom";
 import { isValidPhone } from "../utils/helpers.ts";
@@ -16,6 +17,10 @@ interface Request {
 
 export interface FormErrors {
   phone: string;
+}
+
+interface UpdateOrderParams {
+  orderId: string;
 }
 
 export async function createOrderAction({ request }: Request) {
@@ -60,4 +65,14 @@ export async function createOrderAction({ request }: Request) {
     console.error("Error creating order:", error);
     throw error;
   }
+}
+
+export async function updateOrderAction({
+  params,
+}: {
+  params: UpdateOrderParams;
+}) {
+  const data = { priority: true };
+  await updateOrder(params.orderId, data);
+  return null;
 }
